@@ -22,7 +22,7 @@ function doReadData()
     P = P / 1000
     otext=string.format("%4.1f hPa", P)
     print(otext)
-    DrawText(0,30,otext)
+    DrawText(0,31,otext)
   end
   if T~=nil then
     T = T / 100
