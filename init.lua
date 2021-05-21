@@ -6,9 +6,9 @@ if file.exists("dispsetup.lua") then
     starttmr:register(1000, tmr.ALARM_AUTO,function()
       if tcount==0 then
         starttmr:unregister()
-        --[if file.exists("apconn.lua") then
-        --  dofile("apconn.lua")
-        --end
+        if file.exists("apconn.lua") then
+          dofile("apconn.lua")
+        end
         if file.exists("bmp280.lua") then
           dofile("bmp280.lua")
         end
