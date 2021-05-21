@@ -21,13 +21,13 @@ function doReadData()
   if P~=nil then
     P = P / 1000
     otext=string.format("%4.1f hPa", P)
-    print(otext)
+    --print(otext)
     DrawText(0,31,otext)
   end
   if T~=nil then
     T = T / 100
     otext=string.format("%2.2f %sC", T, string.char(176))
-    print(otext)
+    --print(otext)
     DrawText(0,55,otext)
   end
 end
