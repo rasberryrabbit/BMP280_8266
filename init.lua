@@ -1,7 +1,7 @@
 if file.exists("dispsetup.lua") then 
     dofile("dispsetup.lua")
     starttmr=tmr.create()
-    tcount=7
+    tcount=6
     _G.gotip=false
     starttmr:register(1000, tmr.ALARM_AUTO,function()
       if tcount==0 then
