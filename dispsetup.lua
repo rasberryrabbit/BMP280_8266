@@ -19,7 +19,7 @@ end
 function DrawText(x,y,str)
   disp:setFont(u8g2.font_fub20_tf)
   disp:setDrawColor(0)
-  disp:drawBox(0,y-20,128,20)
+  disp:drawBox(0,y-20,128-20,20)
   disp:setDrawColor(1)
   disp:drawStr(x,y,str)
   disp:sendBuffer()

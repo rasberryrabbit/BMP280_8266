@@ -20,13 +20,13 @@ function doReadData()
   MsgSystem("")
   if P~=nil then
     P = P / 1000
-    otext=string.format("%4.1f hPa", P)
+    otext=string.format("%4.1f", P)
     --print(otext)
     DrawText(0,31,otext)
   end
   if T~=nil then
     T = T / 100
-    otext=string.format("%2.2f %sC", T, string.char(176))
+    otext=string.format("%2.2f", T)
     --print(otext)
     DrawText(0,55,otext)
   end
@@ -38,4 +38,6 @@ end)
 
 MsgSystem("start bmp280")
 bmptimer:start()
+DrawXBM(128-20,31-20,20,20,"ihPa.bin")
+DrawXBM(128-20,55-20,20,20,"icel.bin")
 doReadData()

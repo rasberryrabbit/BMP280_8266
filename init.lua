@@ -3,6 +3,9 @@ if file.exists("dispsetup.lua") then
     if file.exists("apconn.lua") then
       dofile("apconn.lua")
     end
+    if file.exists("xbmconv.lua") then
+      dofile("xbmconv.lua")
+    end
     starttmr=tmr.create()
     tcount=6
     _G.gotip=false
