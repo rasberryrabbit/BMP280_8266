@@ -6,4 +6,5 @@ D2 -> SDA
 3.3V -> VCC  
 GND -> GND  
   
-![bmp280_esp8266](./bmp280_esp8266.png)
+![bmp280_esp8266](./bmp280_esp8266.png)  
+![bmp280_8266_1](./bmp280_8266_1.png)  
