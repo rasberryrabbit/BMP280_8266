@@ -20,7 +20,7 @@ function doReadData()
   MsgSystem("")
   if P~=nil then
     P = P / 1000
-    otext=string.format("%4.1f", P)
+    otext=string.format("%4.2f", P)
     --print(otext)
     DrawText(0,31,otext)
   end
