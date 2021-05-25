@@ -14,12 +14,12 @@ function write_reg(id, dev_addr, reg_addr, data)
 end
 
 bme280.setup()
--- sample x1, forced, not filtered
+-- sample x1, forced, not filtered, sleep
 if write_reg(0, 0x76, 0xF5, 0xe0)==0 then
   write_reg(0, 0x77, 0xF5, 0xe0)
-  write_reg(0, 0x77, 0xF4, 0x25)
+  write_reg(0, 0x77, 0xF4, 0x24)
 else
-  write_reg(0, 0x76, 0xF4, 0x25)
+  write_reg(0, 0x76, 0xF4, 0x24)
 end
 
 bmptimer=tmr.create()
@@ -33,7 +33,13 @@ function start()
 end
 
 function doReadData()
+  if write_reg(0, 0x76, 0xF4, 0x25)==0 then
+    write_reg(0, 0x77, 0xF4, 0x25)
+  end
   T, P, H, QNH = bme280.read()
+  --[[ if write_reg(0, 0x76, 0xF4, 0x24)==0 then
+    write_reg(0, 0x77, 0xF4, 0x24)
+  end ]]--
   MsgSystem("")
   if P~=nil then
     P = P / 1000
@@ -49,7 +55,7 @@ function doReadData()
   end
 end
 
-bmptimer:register(1000,tmr.ALARM_AUTO, function()
+bmptimer:register(3000,tmr.ALARM_AUTO, function()
   doReadData()
 end)
 
