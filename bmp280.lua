@@ -3,7 +3,24 @@ id = 0
 if i2c.setup(id, sda, scl, i2c.FAST)==0 then -- call i2c.setup() only once
   print("i2c bus init error")
 end
-bme280.setup(2) -- 2 for bmp280?
+
+function write_reg(id, dev_addr, reg_addr, data)
+    i2c.start(id)
+    i2c.address(id, dev_addr, i2c.TRANSMITTER)
+    i2c.write(id, reg_addr)
+    c = i2c.write(id, data)
+    i2c.stop(id)
+    return c
+end
+
+bme280.setup()
+-- sample x1, forced, not filtered
+if write_reg(0, 0x76, 0xF5, 0xe0)==0 then
+  write_reg(0, 0x77, 0xF5, 0xe0)
+  write_reg(0, 0x77, 0xF4, 0x25)
+else
+  write_reg(0, 0x76, 0xF4, 0x25)
+end
 
 bmptimer=tmr.create()
 
