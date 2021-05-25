@@ -16,7 +16,7 @@ function start()
 end
 
 function doReadData()
-  P, T = bme280.baro()
+  T, P, H, QNH = bme280.read()
   MsgSystem("")
   if P~=nil then
     P = P / 1000
