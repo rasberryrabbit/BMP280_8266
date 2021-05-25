@@ -37,9 +37,9 @@ function doReadData()
     write_reg(0, 0x77, 0xF4, 0x25)
   end
   T, P, H, QNH = bme280.read()
-  --[[ if write_reg(0, 0x76, 0xF4, 0x24)==0 then
+  if write_reg(0, 0x76, 0xF4, 0x24)==0 then
     write_reg(0, 0x77, 0xF4, 0x24)
-  end ]]--
+  end
   MsgSystem("")
   if P~=nil then
     P = P / 1000
