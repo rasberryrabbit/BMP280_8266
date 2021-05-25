@@ -3,7 +3,7 @@ id = 0
 if i2c.setup(id, sda, scl, i2c.FAST)==0 then -- call i2c.setup() only once
   print("i2c bus init error")
 end
-bme280.setup(0x76) -- bmp280 module, 0x77 for bme280
+bme280.setup(2) -- 2 for bmp280?
 
 bmptimer=tmr.create()
 
