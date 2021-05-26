@@ -54,8 +54,23 @@ function doReadData()
   end
 end
 
-bmptimer:register(3000,tmr.ALARM_AUTO, function()
-  doReadData()
+local sec, inv = 0, false
+
+bmptimer:register(1000,tmr.ALARM_AUTO, function()
+  if sec==30 then
+    doReadData()
+    inv = not inv
+    sec=0
+  else
+    sec=sec+1
+    if inv then
+      disp:setDrawColor(0)
+    else
+      disp:setDrawColor(1)
+    end
+    disp:drawPixel(sec,61)
+    disp:sendBuffer()
+  end
 end)
 
 MsgSystem("start bmp280")
