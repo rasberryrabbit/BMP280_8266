@@ -46,6 +46,7 @@ function doReadData()
     bconfig=0x20
   end
   write_reg(id, baddr, 0xF4, bconfig+1)
+  tmr.delay(50000)
   T, P, H, QNH = bme280.read()
   write_reg(id, baddr, 0xF4, bconfig)
   MsgSystem("")
