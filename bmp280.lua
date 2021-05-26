@@ -14,15 +14,16 @@ function write_reg(id, dev_addr, reg_addr, data)
 end
 
 local baddr=0x76
+local bconfig=0x24 -- bconfig : 24 = pressure, 20 = temp only
 
 bme280.setup()
 -- sample x1, forced, not filtered, sleep
 if write_reg(id, baddr, 0xF5, 0xe0)==0 then
   baddr=0x77
   write_reg(id, baddr, 0xF5, 0xe0)
-  write_reg(id, baddr, 0xF4, 0x24)
+  write_reg(id, baddr, 0xF4, bconfig)
 else
-  write_reg(id, baddr, 0xF4, 0x24)
+  write_reg(id, baddr, 0xF4, bconfig)
 end
 
 bmptimer=tmr.create()
@@ -35,12 +36,20 @@ function start()
   bmptimer:start()
 end
 
+local count=0
+local ep=true
+
 function doReadData()
-  write_reg(id, baddr, 0xF4, 0x25)
+  if ep then
+    bconfig=0x24
+  else
+    bconfig=0x20
+  end
+  write_reg(id, baddr, 0xF4, bconfig+1)
   T, P, H, QNH = bme280.read()
-  write_reg(id, baddr, 0xF4, 0x24)
+  write_reg(id, baddr, 0xF4, bconfig)
   MsgSystem("")
-  if P~=nil then
+  if ep and P~=nil then
     P = P / 1000
     otext=string.format("%4.2f", P)
     --print(otext)
@@ -52,9 +61,16 @@ function doReadData()
     --print(otext)
     DrawText(0,55,otext)
   end
+  ep=false
 end
 
-bmptimer:register(5000,tmr.ALARM_AUTO, function()
+bmptimer:register(1000,tmr.ALARM_AUTO, function()
+  if count==30 then
+    ep=true
+    count=0
+  else
+    count=count+1
+  end
   doReadData()
 end)
 
