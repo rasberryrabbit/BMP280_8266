@@ -13,13 +13,16 @@ function write_reg(id, dev_addr, reg_addr, data)
     return c
 end
 
+local baddr=0x76
+
 bme280.setup()
 -- sample x1, forced, not filtered, sleep
-if write_reg(0, 0x76, 0xF5, 0xe0)==0 then
-  write_reg(0, 0x77, 0xF5, 0xe0)
-  write_reg(0, 0x77, 0xF4, 0x24)
+if write_reg(id, baddr, 0xF5, 0xe0)==0 then
+  baddr=0x77
+  write_reg(id, baddr, 0xF5, 0xe0)
+  write_reg(id, baddr, 0xF4, 0x24)
 else
-  write_reg(0, 0x76, 0xF4, 0x24)
+  write_reg(id, baddr, 0xF4, 0x24)
 end
 
 bmptimer=tmr.create()
@@ -33,13 +36,9 @@ function start()
 end
 
 function doReadData()
-  if write_reg(0, 0x76, 0xF4, 0x25)==0 then
-    write_reg(0, 0x77, 0xF4, 0x25)
-  end
+  write_reg(id, baddr, 0xF4, 0x25)
   T, P, H, QNH = bme280.read()
-  if write_reg(0, 0x76, 0xF4, 0x24)==0 then
-    write_reg(0, 0x77, 0xF4, 0x24)
-  end
+  write_reg(id, baddr, 0xF4, 0x24)
   MsgSystem("")
   if P~=nil then
     P = P / 1000
