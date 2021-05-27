@@ -66,7 +66,7 @@ function doReadData()
 end
 
 bmptimer:register(1000,tmr.ALARM_AUTO, function()
-  if count==30 then
+  if count==60 then
     ep=true
     count=0
   else
