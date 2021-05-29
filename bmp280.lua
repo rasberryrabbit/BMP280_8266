@@ -36,11 +36,16 @@ function start()
   bmptimer:start()
 end
 
-local count=0
-local ep=true
+local ep
+local pt=0
+local tt=0
+rtctime.set(60)
 
 function doReadData()
-  if ep then
+  ct=rtctime.get()
+  if ct-pt>=60 then
+    pt=ct
+    ep=true
     bconfig=0x24
   else
     bconfig=0x20
@@ -56,7 +61,8 @@ function doReadData()
     --print(otext)
     DrawText(0,31,otext)
   end
-  if T~=nil then
+  if ct-tt>=5 and T~=nil then
+    tt=ct
     T = T / 100
     otext=string.format("%2.2f", T)
     --print(otext)
@@ -65,18 +71,14 @@ function doReadData()
   ep=false
 end
 
-bmptimer:register(5000,tmr.ALARM_AUTO, function()
-  if count==12 then
-    ep=true
-    count=0
-  else
-    count=count+1
-  end
+bmptimer:register(1000,tmr.ALARM_AUTO, function()
   doReadData()
 end)
 
-MsgSystem("start bmp280")
+print("start bmp280")
 bmptimer:start()
 DrawXBM(128-20,31-20,20,20,"ihPa.bin")
 DrawXBM(128-20,55-20,20,20,"icel.bin")
+
 doReadData()
+
