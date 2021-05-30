@@ -39,11 +39,11 @@ end
 local ep
 local pt=0
 local tt=0
-rtctime.set(60)
+rtctime.set(120)
 
 function doReadData()
   ct=rtctime.get()
-  if ct-pt>=60 then
+  if ct-pt>=120 then
     pt=ct
     ep=true
     bconfig=0x24
@@ -61,7 +61,7 @@ function doReadData()
     --print(otext)
     DrawText(0,31,otext)
   end
-  if ct-tt>=5 and T~=nil then
+  if ct-tt>=10 and T~=nil then
     tt=ct
     T = T / 100
     otext=string.format("%2.2f", T)
