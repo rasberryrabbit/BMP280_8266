@@ -71,7 +71,7 @@ function doReadData()
   ep=false
 end
 
-bmptimer:register(1000,tmr.ALARM_AUTO, function()
+bmptimer:register(5000,tmr.ALARM_AUTO, function()
   doReadData()
 end)
 
